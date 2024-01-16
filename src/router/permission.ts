@@ -16,7 +16,7 @@ export function setupPageGuard(router: Router) {
       }
       catch (error) {
         if (to.path !== '/500')
-          next({ name: '500' })
+          next({ name: 'Root' })
         else
           next()
       }

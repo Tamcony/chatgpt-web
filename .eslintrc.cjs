@@ -1,4 +1,5 @@
 module.exports = {
-  root: true,
+	root: true,
+	allowIndentationTabs: false,
   extends: ['@antfu'],
 }

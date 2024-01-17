@@ -3,6 +3,10 @@ import type { PluginOption } from 'vite'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"
+import IconsResolver from "unplugin-icons/resolver"
 
 function setupPlugins(env: ImportMetaEnv): PluginOption[] {
   return [
@@ -17,6 +21,15 @@ function setupPlugins(env: ImportMetaEnv): PluginOption[] {
           { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },
         ],
       },
+    }),
+    AutoImport({
+      imports: ['vue', 'vue-router'],
+      dts: 'typings/auto-imports.d.ts',
+    }),
+    Components({
+      resolvers: [AntDesignVueResolver({ importStyle: false }), IconsResolver({ prefix: 'i' })],
+      dts: 'typings/components.d.ts',
+      include: [/\.ts$/, /\.vue$/],
     }),
   ]
 }
@@ -36,11 +49,11 @@ export default defineConfig((env) => {
       port: 1002,
       open: false,
       proxy: {
-        '/api': {
-          target: viteEnv.VITE_APP_API_BASE_URL,
-          changeOrigin: true, // 允许跨域
-          rewrite: path => path.replace('/api/', '/'),
-        },
+        // '/api': {
+        //   target: viteEnv.VITE_APP_API_BASE_URL,
+        //   changeOrigin: true, // 允许跨域
+        //   rewrite: path => path.replace('/api/', '/'),
+        // },
       },
     },
     build: {

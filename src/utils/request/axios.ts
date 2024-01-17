@@ -1,11 +1,11 @@
-import axios, { type AxiosResponse } from 'axios'
+import _axios, { type AxiosResponse } from 'axios'
 import { useAuthStore } from '@/store'
 
-const service = axios.create({
+export const axios = _axios.create({
   baseURL: import.meta.env.VITE_GLOB_API_URL,
 })
 
-service.interceptors.request.use(
+axios.interceptors.request.use(
   (config) => {
     const token = useAuthStore().token
     if (token)
@@ -17,7 +17,7 @@ service.interceptors.request.use(
   },
 )
 
-service.interceptors.response.use(
+axios.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
     if (response.status === 200)
       return response
@@ -28,5 +28,3 @@ service.interceptors.response.use(
     return Promise.reject(error)
   },
 )
-
-export default service

@@ -1,3 +1,4 @@
+//此文件使用chatgpt，暂时弃用
 import type { AxiosProgressEvent, GenericAbortSignal } from 'axios'
 import { post } from '@/utils/request'
 import { useAuthStore, useSettingStore } from '@/store'
